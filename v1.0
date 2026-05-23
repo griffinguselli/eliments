@@ -1,0 +1,50 @@
+## Import Modules ##
+import requests
+import sys
+from subprocess import run
+run('clear', shell=True)
+try:
+    from readchar import readkey
+except ModuleNotFoundError:
+    run('pip install readchar --break-system-packages', shell=True)
+## Get City ##
+try:
+    city = sys.argv[1]
+except IndexError:
+    print("Please Provide An Index!")
+    sys.exit()
+
+## Grab & Format .Json File ##
+x = (requests.get(f"https://wttr.in/{city}?format=j1"))
+x = x.json()
+
+## Split File Into Seperate Variables ##
+feelslikeC = x["current_condition"][0]["FeelsLikeC"]
+isC = x["current_condition"][0]["temp_C"]
+windkph = x["current_condition"][0]["windspeedKmph"]
+winddir = x["current_condition"][0]["winddir16Point"]
+state = x["current_condition"][0]["weatherDesc"][0]["value"]
+moonphase = x["weather"][0]["astronomy"][0]["moon_phase"]
+sunrise = x["weather"][0]["astronomy"][0]["sunrise"]
+sunset = x["weather"][0]["astronomy"][0]["sunset"]
+avgtempC = x["weather"][0]["avgtempC"]
+date = x["weather"][0]["date"]
+area = x["nearest_area"][0]["areaName"][0]["value"]
+areacountry = x["nearest_area"][0]["country"][0]["value"]
+region = x["nearest_area"][0]["region"][0]["value"]
+
+## Output ##
+print(f"Feels Like (C) : {feelslikeC}\nTemperature (C) : {isC}")
+print(f"Avg. Temp (C) : {avgtempC}")
+print(f"Date : {date}")
+print(f"Area : {city} ({area}, {region}, {areacountry})")
+print(f"State : {state}")
+print(f"Wind Speed (KPH) : {windkph}")
+print(f"Wind Direction (N, S, E, W) : {winddir}")
+print(f"Moonphase : {moonphase}")
+print(f"Sunrise/Sunset : {sunrise} & {sunset}")
+
+while True:
+    if readkey() == 'q':
+        run('clear', shell=True)
+        sys.exit()
