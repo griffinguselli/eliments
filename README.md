@@ -1,5 +1,5 @@
 # eliments
-A CLI Weather App With Searchable Cities.
+A CLI Weather App With Searchable Places (Cities, Addresses, Countries) 
 ## Controls:
 Run: 
 ``` python3 weather.py A_CITY```
